@@ -1,0 +1,11 @@
+{
+  "n_trips": 6500000,
+  "cpu_seconds": 41.8,
+  "gpu_seconds": 2.4,
+  "speedup": 17.4,
+  "rows_per_sec_cpu": 155502,
+  "rows_per_sec_gpu": 2708333,
+  "gpu_name": "NVIDIA T4 (Colab)",
+  "generated_at": "synthetic-placeholder",
+  "is_synthetic": true
+}

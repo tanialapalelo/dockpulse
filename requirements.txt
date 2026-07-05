@@ -1,0 +1,6 @@
+streamlit>=1.36
+pandas>=2.0
+pyarrow>=14
+numpy>=1.26
+pydeck>=0.9
+google-generativeai>=0.7

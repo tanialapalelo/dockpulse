@@ -1,0 +1,8 @@
+# Reference deps for the Colab GPU notebook (NVIDIA acceleration layer).
+# On Colab: Runtime > Change runtime type > T4 GPU, then:
+#   pip install cudf-cu12 --extra-index-url=https://pypi.nvidia.com
+# cudf.pandas usually ships preinstalled on Colab GPU runtimes.
+cudf-cu12
+google-cloud-bigquery[bqstorage,pandas]
+pandas
+pyarrow

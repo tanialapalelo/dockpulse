@@ -38,8 +38,8 @@ the dispatcher act *before* a station fails rather than after.
 - **App:** Streamlit + pydeck, deployed on Streamlit Community Cloud
 
 ## Links
-- **Live prototype:** `<streamlit-app-url>`
-- **GitHub (public):** `<github-repo-url>`
+- **Live prototype:** `https://dockpulse-qdswtbn7xx5t6yje6ksyuy.streamlit.app`
+- **GitHub (public):** `http://github.com/tanialapalelo/dockpulse`
 - **Demo video:** `<video-url>`
 - **Pitch deck:** `<deck-url-or-attached>`
 

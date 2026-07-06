@@ -92,19 +92,22 @@ def bullets(slide, x, y, w, h, items, size=18, color=INK, gap=8):
     return tb
 
 
-def fill(slide, color):
-    slide.background.fill.solid()
-    slide.background.fill.fore_color.rgb = color
-
-
 def bar(slide, x, y, w, h, color):
     from pptx.enum.shapes import MSO_SHAPE
     sh = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, y, w, h)
     sh.fill.solid()
     sh.fill.fore_color.rgb = color
     sh.line.fill.background()
-    sh.shadow.inherit = False
     return sh
+
+
+def fill(slide, color):
+    """Full-bleed colour 'background'. Uses a plain rectangle shape instead of
+    slide.background XML — the background part is a less-exercised python-pptx
+    code path and some strict OOXML readers (Keynote in particular) have been
+    known to reject it. A full-slide rectangle is visually identical and far
+    more conventional/well-tested."""
+    return bar(slide, 0, 0, SW, SH, color)
 
 
 def chip(slide, x, y, text, color=NVIDIA):
@@ -112,7 +115,7 @@ def chip(slide, x, y, text, color=NVIDIA):
     w = Inches(0.18 + 0.11 * len(text))
     sh = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, Inches(0.42))
     sh.fill.solid(); sh.fill.fore_color.rgb = color
-    sh.line.fill.background(); sh.shadow.inherit = False
+    sh.line.fill.background()
     tf = sh.text_frame; tf.word_wrap = False
     tf.margin_top = Pt(2); tf.margin_bottom = Pt(2)
     _set(tf, text, 11, WHITE, bold=True, align=PP_ALIGN.CENTER)

@@ -72,12 +72,19 @@ for i, (text, color) in enumerate(steps):
     if i > 0:
         arrow(ax, (centers[i-1][1], y0 + bh / 2), (x, y0 + bh / 2))
 
-# loop-back arrow: step 5 -> step 2, labelled "re-check in 30 min"
+# loop-back path: step 5 -> step 2, drawn as an explicit right-angle route
+# (up / across / down) instead of a smooth arc — a wide arc's control point can
+# overshoot the axes' y-limit and get silently clipped, leaving only a stray
+# mark. A right-angle path stays fully inside the frame by construction.
 last_x = centers[-1][0] + bw / 2
 second_x = centers[1][0] + bw / 2
-arrow(ax, (last_x, y0 + bh + 0.05), (second_x, y0 + bh + 0.05),
-      color=NVIDIA, connectionstyle="arc3,rad=-0.35")
-label(ax, (last_x + second_x) / 2, y0 + bh + 1.05, "re-check in 30 minutes",
+top_y = y0 + bh + 0.5  # comfortably inside the y-limit (5.2)
+
+ax.plot([last_x, last_x], [y0 + bh + 0.05, top_y], color=NVIDIA, linewidth=2.2, zorder=1)
+ax.plot([second_x, last_x], [top_y, top_y], color=NVIDIA, linewidth=2.2, zorder=1)
+arrow(ax, (second_x, top_y), (second_x, y0 + bh + 0.05), color=NVIDIA)
+
+label(ax, (last_x + second_x) / 2, top_y + 0.35, "re-check in 30 minutes",
       color=NVIDIA, fontsize=11.5, weight="bold")
 
 label(ax, 13.3 / 2, 0.55,

@@ -13,6 +13,7 @@ from pathlib import Path
 from pptx import Presentation
 from pptx.dml.color import RGBColor
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+from pptx.oxml.ns import qn
 from pptx.util import Emu, Inches, Pt
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -34,6 +35,17 @@ BLUE = RGBColor(0x1D, 0x6F, 0xD6)
 prs = Presentation()
 prs.slide_width = Inches(13.333)
 prs.slide_height = Inches(7.5)
+
+# python-pptx bug workaround: setting slide_width/height only updates the
+# sldSz cx/cy attributes, but leaves the stale type="screen4x3" attribute in
+# place (the default template's original 4:3 label). That mismatch — real
+# dimensions say 16:9, but the type flag still says 4:3 — makes strict OOXML
+# readers (Keynote in particular) reject the file as "invalid format". Drop
+# the stale type attribute so only cx/cy (the real 16:9 size) are declared.
+sldSz = prs._element.find(qn("p:sldSz"))
+if sldSz is not None and "type" in sldSz.attrib:
+    del sldSz.attrib["type"]
+
 BLANK = prs.slide_layouts[6]
 SW, SH = prs.slide_width, prs.slide_height
 
